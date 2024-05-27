@@ -4,11 +4,11 @@
 
 ## Overview
 
-This is a REST API that adds support to the [psf-slp-indexer](https://github.com/Permissionless-Software-Foundation/psf-slp-indexer).
+This is a REST API that provides support features to the [psf-slp-indexer](https://github.com/Permissionless-Software-Foundation/psf-slp-indexer).
 
-The inspiration for this app was the observation that SLP tokens would temporarily 'wink' out of existence and then come back after a short period of time during periods of high transaction volume and generation of large blocks. The reason this would happen is because node.js JavaScript is single threaded. Analyzing the new block would block the indexer from processing new SLP transaction in real-time.
+The inspiration for this app was the observation that SLP tokens would temporarily 'wink' out of existence and then come back after a short period of time during periods of high transaction volume and generation of large blocks. The reason this would happen is because node.js JavaScript is single threaded. Analyzing the new block would reduce the indexers ability to process new SLP transaction in real-time.
 
-Node.js Worker Threads were tried first, but they do not play well with Promises. So this second REST API was created, which creates a new Process. This solves the issue by allowing the processing of SLP indexing to leverage more than one processing core. During real-time processing, the SLP indexer can pass block analysis off to this app, while it continues to processing real-time transactions.
+[Node.js Worker Threads](https://nodejs.org/api/worker_threads.html) were explored first, but they do not play well with Promises. So this second REST API was created, which creates a new Process. This solves the issue by allowing the processing of SLP indexing to leverage more than one processing core. During real-time processing, the SLP indexer can pass block analysis off to this app, while it continues to processing real-time transactions.
 
 This app will mostly likely be expanded to take on additional intensive processing, in order to support the performance of the SLP indexer.
 
@@ -38,8 +38,8 @@ docker-compose up -d
 A development environment will allow you modify the code on-the-fly and contribute to the code base of this repository. Ubuntu v20 is the recommended OS for creating a dev environment. Other operating systems may cause issues.
 
 ```bash
-git clone https://github.com/Permissionless-Software-Foundation/ipfs-service-provider
-cd ipfs-service-provider
+git clone https://github.com/Permissionless-Software-Foundation/slp-support-api
+cd slp-support-api
 ./install-mongo-sh
 npm install
 npm start
