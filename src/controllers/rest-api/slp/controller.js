@@ -29,11 +29,7 @@ class SlpRESTControllerLib {
 
     // Bind 'this' object to all subfunctions
     this.getStatus = this.getStatus.bind(this)
-    this.getPeers = this.getPeers.bind(this)
-    this.getRelays = this.getRelays.bind(this)
-    this.handleError = this.handleError.bind(this)
-    this.connect = this.connect.bind(this)
-    this.getThisNode = this.getThisNode.bind(this)
+    this.filterAndSortSlpTxs = this.filterAndSortSlpTxs.bind(this)
   }
 
   /**
@@ -58,68 +54,17 @@ class SlpRESTControllerLib {
     }
   }
 
-  // Return information on IPFS peers this node is connected to.
-  async getPeers (ctx) {
+  // Filter and sort block transactions, to make indexing more efficient
+  // and easier to debug.
+  async filterAndSortSlpTxs (ctx) {
     try {
-      const showAll = ctx.request.body.showAll
+      // const {txids, blockHeight} = ctx.request.body
 
-      const peers = await this.adapters.ipfs.getPeers(showAll)
+      const filteredTxs = await this.useCases.slp.filterAndSortSlpTxs(ctx.request.body)
 
-      ctx.body = { peers }
+      ctx.body = filteredTxs
     } catch (err) {
-      wlogger.error('Error in ipfs/controller.js/getPeers(): ')
-      // ctx.throw(422, err.message)
-      this.handleError(ctx, err)
-    }
-  }
-
-  // Get data about the known Circuit Relays. Hydrate with data from peers list.
-  async getRelays (ctx) {
-    try {
-      const relays = await this.adapters.ipfs.getRelays()
-
-      ctx.body = { relays }
-    } catch (err) {
-      wlogger.error('Error in ipfs/controller.js/getRelays(): ')
-      // ctx.throw(422, err.message)
-      this.handleError(ctx, err)
-    }
-  }
-
-  async connect (ctx) {
-    try {
-      const multiaddr = ctx.request.body.multiaddr
-      const getDetails = ctx.request.body.getDetails
-
-      // console.log('this.adapters.ipfs.ipfsCoordAdapter.ipfsCoord.adapters.ipfs: ', this.adapters.ipfs.ipfsCoordAdapter.ipfsCoord.adapters.ipfs)
-      const result = await this.adapters.ipfs.ipfsCoordAdapter.ipfsCoord.adapters.ipfs.connectToPeer({ multiaddr, getDetails })
-      // console.log('result: ', result)
-
-      ctx.body = result
-    } catch (err) {
-      wlogger.error('Error in ipfs/controller.js/connect():', err)
-      // ctx.throw(422, err.message)
-      this.handleError(ctx, err)
-    }
-  }
-
-  /**
-   * @api {get} /ipfs/node Get a copy of the thisNode object from helia-coord
-   * @apiPermission public
-   * @apiName GetThisNode
-   * @apiGroup REST BCH
-   *
-   * @apiExample Example usage:
-   * curl -H "Content-Type: application/json" -X GET localhost:5001/ipfs/node
-   *
-   */
-  async getThisNode (ctx) {
-    try {
-      const thisNode = this.adapters.ipfs.ipfsCoordAdapter.ipfsCoord.thisNode
-
-      ctx.body = { thisNode }
-    } catch (err) {
-      wlogger.error('Error in ipfs/controller.js/getThisNode(): ')
+      wlogger.error('Error in slp/controller.js/getPeers(): ')
       // ctx.throw(422, err.message)
       this.handleError(ctx, err)
     }
