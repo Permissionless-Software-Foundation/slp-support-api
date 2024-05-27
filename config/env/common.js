@@ -145,7 +145,15 @@ export default {
 
     // v2 Circuit Relay server (FullStack.cash)
     // '/ip4/78.46.129.7/tcp/4001/p2p/12D3KooWFQ11GQ5NubsJGhYZ4X3wrAGimLevxfm6HPExCrMYhpSL'
-  ]
+  ],
 
   // END IPFS CONFIGURATION
+
+  // RPC connection information, used by the SLP indexer to communicate with the
+  // full node.
+  rpcIp: process.env.RPC_IP ? process.env.RPC_IP : '172.17.0.1',
+  rpcPort: process.env.RPC_PORT ? process.env.RPC_PORT : '8332',
+  zmqPort: process.env.ZMQ_PORT ? process.env.ZMQ_PORT : '28332',
+  rpcUser: process.env.RPC_USER ? process.env.RPC_USER : 'bitcoin',
+  rpcPass: process.env.RPC_PASS ? process.env.RPC_PASS : 'password'
 }
