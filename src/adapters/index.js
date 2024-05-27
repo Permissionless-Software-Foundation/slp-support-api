@@ -32,7 +32,7 @@ class Adapters {
     this.bchjs = new BCHJS()
     this.config = config
     this.wallet = new Wallet(localConfig)
-    this.slpSupport = new SlpSupport()
+    this.slp = new SlpSupport()
 
     // Get a valid JWT API key and instance bch-js.
     this.fullStackJwt = new FullStackJWT(config)

@@ -11,6 +11,12 @@ class SlpSupportAdapter {
     // Encapsulate dependencies
     this.rpc = new RPC()
   }
+
+  getStatus () {
+    return {
+      success: true
+    }
+  }
 }
 
 export default SlpSupportAdapter
