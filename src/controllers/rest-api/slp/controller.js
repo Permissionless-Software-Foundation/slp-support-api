@@ -43,7 +43,7 @@ class SlpRESTControllerLib {
    * @apiGroup REST BCH
    *
    * @apiExample Example usage:
-   * curl -H "Content-Type: application/json" -X GET localhost:5001/ipfs
+   * curl -H "Content-Type: application/json" -X GET localhost:5019/slp
    *
    */
   async getStatus (ctx) {

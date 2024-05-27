@@ -75,4 +75,8 @@ const localdb = {
   }
 }
 
-export default { ipfs, localdb };
+const slp = {
+  getStatus: () => {}
+}
+
+export default { ipfs, localdb, slp };
