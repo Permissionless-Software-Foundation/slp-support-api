@@ -1,49 +1,16 @@
-# ipfs-service-provider
+# slp-support-api
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## Overview
 
-This is a 'boilerplate' repository. It's intended to be forked to start new projects. Some code projects that are forks of this repository and regularly pull in changes:
-- [pay-to-write database (P2WDB)](https://p2wdb.com/)
-- [ipfs-bch-wallet-consumer](https://github.com/Permissionless-Software-Foundation/ipfs-bch-wallet-consumer)
-- [ipfs-bch-wallet-service](https://github.com/Permissionless-Software-Foundation/ipfs-bch-wallet-service)
-- [colab-coinjoin-api](https://github.com/bch-coinjoin/colab-coinjoin-api)
+This is a REST API that adds support to the [psf-slp-indexer](https://github.com/Permissionless-Software-Foundation/psf-slp-indexer).
 
+The inspiration for this app was the observation that SLP tokens would temporarily 'wink' out of existence and then come back after a short period of time during periods of high transaction volume and generation of large blocks. The reason this would happen is because node.js JavaScript is single threaded. Analyzing the new block would block the indexer from processing new SLP transaction in real-time.
 
-In addition to being forked as a boilerplate, it can also be run as a stand-alone application to create a [Circuit Relay](https://cashstack.info/docs/local-back-end/circuit-relay), which can support the [PSF](https://psfoundation.info) IPFS network. It can also be used for experimenting with [helia-coord](https://github.com/Permissionless-Software-Foundation/helia-coord) and the [psf-bch-wallet](https://github.com/Permissionless-Software-Foundation/psf-bch-wallet) command-line wallet.
+Node.js Worker Threads were tried first, but they do not play well with Promises. So this second REST API was created, which creates a new Process. This solves the issue by allowing the processing of SLP indexing to leverage more than one processing core. During real-time processing, the SLP indexer can pass block analysis off to this app, while it continues to processing real-time transactions.
 
-### Video Demo
-
-A video demo shows you how to quickly setup ipfs-service-provider and start interacting with its IPFS node using the [psf-bch-wallet](https://github.com/Permissionless-Software-Foundation/psf-bch-wallet) command-line app.
-
-- [ipfs-service-provider Demo Video](https://youtu.be/_9Xvh3aMrFg)
-
-## Boilerplate
-
-This repository has been forked from the [koa-api-boilerplate](https://github.com/christroutner/koa-api-boilerplate). It has all the same features as that boilerplate:
-
-- [Koa](https://koajs.com/) framework for REST APIs
-- User management
-- Access and rate-limit control (authentication and authorization) using [JWT tokens](https://jwt.io/)
-- Logging system with API access
-- Email contact integration
-
-This boilerplate extends that code to provide the basic features required to be a 'service provider' on the [IPFS](https://ipfs.io) network. This is a core concept in the [web3 Cash Stack](https://cashstack.info). These basic features include:
-
-- [helia-coord](https://github.com/Permissionless-Software-Foundation/helia-coord) for coordinating service providers and consumers across the IPFS network.
-- JSON RPC for creating an API between providers and consumers.
-
-If you are interested in creating your own service provider on the IPFS network, fork this repository and start building. This repository is used in serveral PSF projects:
-
-- [P2WDB](https://github.com/Permissionless-Software-Foundation/ipfs-p2wdb-service) - the [pay-to-write database](https://p2wdb.com) is a censorship-resistent, p2p database for storing data and pinning files to the IPFS network.
-- [ipfs-bch-wallet-consumer](https://github.com/Permissionless-Software-Foundation/ipfs-bch-wallet-consumer) and [ipfs-bch-wallet-service](https://github.com/Permissionless-Software-Foundation/ipfs-bch-wallet-service) creates a web3, censorship-resistent API for apps to communicate with a blockchain. This software is documented in [the Cash Stack](https://cashstack.info).
-- [colab-coinjoin-api](https://github.com/bch-coinjoin/colab-coinjoin-api) is part of the [Collaborative CoinJoin](https://ccoinjoin.com) framework to allow wallets to easily integrate CoinJoin transaction forming, to create financial privacy.
-
-## IPFS node
-This web server spins up an embedded IPFS ([Helia](https://github.com/ipfs/helia)) node. This node can be controlled and interrogated via the REST API. [psf-bch-wallet](https://github.com/Permissionless-Software-Foundation/psf-bch-wallet) is a command-line app (CLI) that can easily tap into this REST API in order to interact with the embedded IPFS node.
-
-- *Video link will be added here*
+This app will mostly likely be expanded to take on additional intensive processing, in order to support the performance of the SLP indexer.
 
 ## Requirements
 
