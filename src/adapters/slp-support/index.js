@@ -7,7 +7,7 @@
 import RPC from './rpc.js'
 
 class SlpSupportAdapter {
-  constructor() {
+  constructor () {
     // Encapsulate dependencies
     this.rpc = new RPC()
   }
