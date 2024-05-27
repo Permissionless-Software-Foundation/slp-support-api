@@ -27,7 +27,7 @@ const ipfsCoordName = process.env.COORD_NAME
 
 export default {
   // Configure TCP port.
-  port: process.env.PORT || 5020,
+  port: process.env.PORT || 5019,
 
   // Password for HTML UI that displays logs.
   logPass: 'test',
@@ -96,7 +96,7 @@ export default {
   debugLevel: process.env.DEBUG_LEVEL ? parseInt(process.env.DEBUG_LEVEL) : 2,
 
   // Enable/Disable the IPFS node at startup. Enabled by default.
-  useIpfs: process.env.DISABLE_IPFS ? false : true,
+  useIpfs: process.env.DISABLE_IPFS ? true : false,
 
   isCircuitRelay: process.env.ENABLE_CIRCUIT_RELAY ? true : false,
   // SSL domain used for websocket connection via browsers.
