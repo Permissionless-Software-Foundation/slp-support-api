@@ -90,13 +90,6 @@ class SlpUseCases {
         } else {
           // Non-token TX
           nonSlpTxs.push(txid)
-
-          // TODO: slp-indexer should loop over nonSlpTxs() and run them through
-          // the deleteBurnedUtxos() function, since this support app can not
-          // access the database.
-          // Check if any input UTXOs are in the database. If so, delete them,
-          // since they are officially burned.
-          // await this.deleteBurnedUtxos(txid)
         }
       }
 
