@@ -50,6 +50,7 @@ class SlpRouter {
 
     // Define the routes and attach the controller.
     this.router.get('/', this.slpRESTController.getStatus)
+    this.router.post('/filterBlock', this.slpRESTController.filterAndSortSlpTxs)
     // this.router.post('/peers', this.ipfsRESTController.getPeers)
     // this.router.post('/relays', this.ipfsRESTController.getRelays)
     // this.router.post('/connect', this.ipfsRESTController.connect)
