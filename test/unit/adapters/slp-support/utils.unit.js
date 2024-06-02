@@ -162,6 +162,20 @@ describe('#utils.js', () => {
       assert.equal(result.totalBurned, '9900')
     })
 
+    it('should update token info with burned token data when there is already burned token history', () => {
+      const utxoObj = mockData.balance01.utxos[0]
+      const tokenData = mockData.tokenData01
+
+      // Create history of total burned.
+      tokenData.totalBurned = 1
+
+      const result = uut.subtractBurnedTokens(utxoObj, tokenData)
+      // console.log('result: ', result)
+
+      assert.equal(result.tokensInCirculationStr, '10100')
+      assert.equal(result.totalBurned, '9901')
+    })
+
     it('should handle a mint baton', () => {
       const utxoObj = mockData.balance01.utxos[0]
       const tokenData = mockData.tokenData01

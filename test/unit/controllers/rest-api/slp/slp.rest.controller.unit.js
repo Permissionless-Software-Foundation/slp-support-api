@@ -87,4 +87,57 @@ describe('#SLP REST API', () => {
       assert.equal(ctx.body.status.a, 'b')
     })
   })
+
+  describe('#GET /filterAndSortSlpTxs', () => {
+    it('should return 422 status on biz logic error', async () => {
+      try {
+        // Force an error
+        sandbox.stub(uut.useCases.slp, 'filterAndSortSlpTxs').rejects(new Error('test error'))
+
+        await uut.filterAndSortSlpTxs(ctx)
+
+        assert.fail('Unexpected result')
+      } catch (err) {
+        assert.equal(err.status, 422)
+        assert.include(err.message, 'test error')
+      }
+    })
+
+    it('should return 200 status on success', async () => {
+      // Mock dependencies
+      sandbox.stub(uut.useCases.slp, 'filterAndSortSlpTxs').returns({ a: 'b' })
+
+      await uut.filterAndSortSlpTxs(ctx)
+      // console.log('ctx.body: ', ctx.body)
+
+      assert.equal(ctx.body.a, 'b')
+    })
+  })
+
+  describe('#handleError', () => {
+    it('should still throw error if there is no message', () => {
+      try {
+        const err = {
+          status: 404
+        }
+
+        uut.handleError(ctx, err)
+      } catch (err) {
+        assert.include(err.message, 'Not Found')
+      }
+    })
+
+    it('should throw error with message', () => {
+      try {
+        const err = {
+          status: 422,
+          message: 'test error'
+        }
+
+        uut.handleError(ctx, err)
+      } catch (err) {
+        assert.include(err.message, 'test error')
+      }
+    })
+  })
 })

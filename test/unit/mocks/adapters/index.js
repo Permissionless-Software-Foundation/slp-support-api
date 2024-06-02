@@ -76,7 +76,13 @@ const localdb = {
 }
 
 const slp = {
-  getStatus: () => {}
+  getStatus: () => {},
+  transaction: {
+    getTokenInfo: async () => {}
+  },
+  blacklist: {
+    checkBlacklist: () => {}
+  }
 }
 
 export default { ipfs, localdb, slp };

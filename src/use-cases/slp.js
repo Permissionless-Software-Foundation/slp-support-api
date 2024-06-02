@@ -33,6 +33,7 @@ class SlpUseCases {
     this.attempts = 5
   }
 
+  // Primary macro function for this library.
   async filterAndSortSlpTxs (inObj = {}) {
     try {
       const { txids, blockHeight } = inObj

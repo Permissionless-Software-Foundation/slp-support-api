@@ -56,7 +56,13 @@ describe('#cache.js', () => {
       // will throw an error.
     })
 
-    it('should get tx data from DB on first call', async () => {
+    it('should get tx data from full-node on first call', async () => {
+      // Mock dependencies and force desired code path
+      sandbox.stub(uut.transaction, 'get').resolves({
+        txid: '6bc111fbf5b118021d68355ca19a0e77fa358dd931f284b2550f79a51ab4792a',
+        blockheight: 543957
+      })
+
       const txid =
         '6bc111fbf5b118021d68355ca19a0e77fa358dd931f284b2550f79a51ab4792a'
 
