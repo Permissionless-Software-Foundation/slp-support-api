@@ -2,6 +2,14 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
+## Deprecation Notice
+
+This code is deprecated and abandoned. Ultimately the approach didn't work.
+
+This code attempted to do the block processing for the psf-slp-indexer in a separate thread. It would do the sorting and filtering pre-process work and then hand the data 
+back to psf-slp-indexer. This approach simply didn't scale. psf-slp-indexer still needed to analyze every TX in a block to find uncontrolled burns. So handing off the
+pre-processing didn't save much it terms of CPU usage. See [this issue](https://github.com/Permissionless-Software-Foundation/psf-slp-indexer/issues/75) for the new approach.
+
 ## Overview
 
 This is a REST API that provides support features to the [psf-slp-indexer](https://github.com/Permissionless-Software-Foundation/psf-slp-indexer).
