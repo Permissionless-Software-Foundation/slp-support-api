@@ -62,7 +62,10 @@ class Server {
       // MIDDLEWARE START
 
       app.use(convert(logger()))
-      app.use(bodyParser())
+      app.use(bodyParser({
+        formLimit: '100mb',
+        jsonLimit: '100mb'
+      }))
       app.use(session())
       app.use(errorMiddleware())
 

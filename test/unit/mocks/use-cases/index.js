@@ -31,12 +31,19 @@ class UserUseCaseMock {
   }
 }
 
+class SlpUseCaseMock {
+  async filterAndSortSlpTxs() {
+    return true
+  }
+}
+
 class UseCasesMock {
   constuctor(localConfig = {}) {
     // this.user = new UserUseCaseMock(localConfig)
   }
 
   user = new UserUseCaseMock()
+  slp = new SlpUseCaseMock()
 }
 
 export default UseCasesMock;
